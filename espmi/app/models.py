@@ -62,6 +62,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     description = models.TextField(null=True)
     group = models.ForeignKey("SpmiGroup", on_delete=models.SET_NULL, null=True, related_name='users')
 
+    groups = None
+    user_permissions = None
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -240,7 +243,7 @@ class ProgramStudi(Unit):
     no_sk = models.CharField(max_length=255)
     start_akreditasi = models.DateField()
     end_akreditasi = models.DateField()
-    file_akrediarasi = models.FileField(upload_to='upload/')
+    file_akreditasi = models.FileField(upload_to='upload/')
     address = models.TextField(blank=True)
     desc = models.TextField(blank=True)
 
@@ -344,7 +347,7 @@ class Indikator(BaseEntryModel):
 class Temuan(BaseModel):
     sub_standar = models.ForeignKey(to=SubStandar, on_delete=models.CASCADE)
     daftar_temuan = models.TextField()
-    jenis_temuan = models.IntegerField(choices=[(1, "Observasi / Minor"), {2, "KTS / Mayor"}])
+    jenis_temuan = models.IntegerField(choices=[(1, "Observasi / Minor"), (2, "KTS / Mayor")])
     akar_masalah = models.TextField()
     rekomendasi = models.TextField()
     peningkatan = models.TextField(blank=True)

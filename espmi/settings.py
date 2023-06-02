@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'espmi.app',
-    'rest_framework'
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_GROUP_MODEL = 'app.SpmiGroup'
 AUTH_USER_MODEL = 'app.User'
+
+
+REST_FRAMEWORK = {
+    # Default Authentication Class
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'c1_customer.app.permission.CustomAuthentication',
+    # ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'espmi.app.config.pagination.CustomPageNumberPagination',
+    'PAGE_SIZE': 10,
+    # Add custom renderer.
+    'DEFAULT_RENDERER_CLASSES': (
+        'espmi.app.config.renderer.CustomJSONRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    # Add cutom exception handler
+    'EXCEPTION_HANDLER': 'espmi.app.config.exception_handler.custom_exception_handler',
+}
