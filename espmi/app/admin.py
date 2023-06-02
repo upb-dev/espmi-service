@@ -1,9 +1,13 @@
-from espmi.app.models import SpmiGroup, Menu, SubMenu, GroupMenuRelation, GroupSubMenuRelation, UserBackOffice, UserPortal, ProgramStudi, Fakultas, UnitPenunjang, Auditor, KelompokSatuanMutu, SatuanMutu, StandarNasional, Standar, SubStandar
 from django.contrib import admin
-
 # Register your models here.
-from django.contrib.auth.models import Permission, Group
+from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+
+from espmi.app.models import (Auditor, Direktorat, DocumentCategory, DocumentType, Dokumen, EvaluasiDiri, Fakultas, GroupMenuRelation,
+                              GroupSubMenuRelation, Indikator, KelompokSatuanMutu, LembagaAkreditasi, Menu, NilaiMutu, Periode,
+                              ProgramStudi, Rektorat, RencanaTindakLanjut, SatuanMutu, SpmiGroup, Standar,
+                              StandarNasional, SubMenu, SubStandar, TahunPeriode, TargetNilaiMutu, Temuan, Unit, User,
+                              UnitPenunjang, UserBackOffice, UserPortal, Visitasi)
 
 
 class GroupMenuInline(admin.StackedInline):
@@ -61,3 +65,22 @@ admin.site.register(UserPortal)
 admin.site.register(SubStandar)
 admin.site.register(Standar)
 admin.site.register(SatuanMutu)
+admin.site.register(User)
+admin.site.register(Temuan)
+admin.site.register(Visitasi)
+admin.site.register(EvaluasiDiri)
+admin.site.register(RencanaTindakLanjut)
+admin.site.register(Indikator)
+admin.site.register(KelompokSatuanMutu)
+admin.site.register(NilaiMutu)
+admin.site.register(TargetNilaiMutu)
+admin.site.register(Periode)
+admin.site.register(LembagaAkreditasi)
+admin.site.register(Rektorat)
+admin.site.register(Direktorat)
+admin.site.register(Unit)
+admin.site.register(StandarNasional)
+admin.site.register(Dokumen)
+admin.site.register(DocumentType)
+admin.site.register(DocumentCategory)
+admin.site.register(TahunPeriode)

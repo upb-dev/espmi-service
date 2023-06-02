@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 
 
 # Create your models here.
@@ -30,6 +31,8 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
+        if password:
+            extra_fields['password'] = make_password(password)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -185,7 +188,7 @@ class DocumentType(BaseEntryModel):
 class Dokumen(BaseModel):
     category = models.ForeignKey(to=DocumentCategory, on_delete=models.CASCADE)
     type = models.ForeignKey(to=DocumentType, on_delete=models.CASCADE)
-    pogram_studi = models.ForeignKey(to="ProgramStudi", on_delete=models.CASCADE, null=True)
+    # pogram_studi = models.ForeignKey(to="ProgramStudi", on_delete=models.CASCADE, null=True)  # TODO delete relasi
     name = models.CharField(max_length=255)
     tahun = models.IntegerField()
     file = models.FileField(upload_to='dokumen/')
@@ -194,24 +197,36 @@ class Dokumen(BaseModel):
         return self.name
 
 
-class Fakultas(BaseEntryModel):
+class Unit(BaseEntryModel):
     name = models.CharField(max_length=225)
 
     def __str__(self):
         return self.name
+
+
+class Fakultas(Unit):
+    pass
+
+
+class Rektorat(Unit):
+    code = models.CharField(max_length=5)
+    address = models.TextField()
+    desc = models.TextField()
+
+
+class Direktorat(Unit):
+    code = models.CharField(max_length=5)
+    address = models.TextField()
+    desc = models.TextField()
 
 
 class UnitPenunjang(BaseEntryModel):
     code = models.CharField(max_length=5)
-    name = models.CharField(max_length=225)
     address = models.TextField()
     desc = models.TextField()
 
-    def __str__(self):
-        return self.name
 
-
-class ProgramStudi(BaseEntryModel):
+class ProgramStudi(Unit):
     AKREDITAS_TYPE = [
         (1, 'A'),
         (2, 'B'),
@@ -220,8 +235,7 @@ class ProgramStudi(BaseEntryModel):
         (5, 'Unggul'),
     ]
     code = models.CharField(max_length=10)
-    name = models.CharField(max_length=255)
-    fakultas = models.ForeignKey(to=Fakultas, on_delete=models.CASCADE)
+    fakultas_rel = models.ForeignKey(to=Fakultas, on_delete=models.CASCADE, related_name='program_studi_set')
     akreditas = models.IntegerField(choices=AKREDITAS_TYPE)
     no_sk = models.CharField(max_length=255)
     start_akreditasi = models.DateField()
@@ -289,12 +303,12 @@ class NilaiMutu(BaseEntryModel):
     desc = models.TextField()
 
 
-class BaseMutu(BaseEntryModel):
+class BaseMutu(BaseModel):
     tahun = models.ForeignKey(TahunPeriode, on_delete=models.CASCADE)
     lembaga_akreditasi = models.ForeignKey(LembagaAkreditasi, on_delete=models.CASCADE)
     name = models.TextField(blank=True)
     data_dukung = models.TextField(blank=True)
-    jenjang = models.IntegerField(choices=[(1, 'Prodi'), (2, 'Direktorat')], null=True)  # TODO jenjang berelasi dengan prodi (Tabel), direktorat (data pada tabel Fakultas)
+    jenjang = models.ManyToManyField(to=Unit)
     desc = models.TextField(blank=True)
     jenis_indikator = models.IntegerField(choices=[(1, 'Kuantitatif'), (2, 'Kualitatif'), (3, 'Radio')], default=1)
     bobot_nilai = models.FloatField(null=True)
@@ -317,28 +331,41 @@ class Standar(BaseMutu):
 
 class SubStandar(BaseMutu):
     standar = models.ForeignKey(Standar, on_delete=models.CASCADE)
-    plotting_unit_kerja = models.ManyToManyField(ProgramStudi)
+    plotting_unit_kerja = models.ManyToManyField(Unit, related_name="substandar_plotting_unit_kerja")
 
 
 class Indikator(BaseEntryModel):
     sub_standar = models.ForeignKey(SubStandar, on_delete=models.CASCADE)
     key = models.CharField(max_length=100)
-    value = models.TextField()
+    value = models.FloatField()
+    data = models.TextField()
 
 
-class Temuan(BaseFieldModel):
+class Temuan(BaseModel):
     sub_standar = models.ForeignKey(to=SubStandar, on_delete=models.CASCADE)
     daftar_temuan = models.TextField()
-    jenis_temuan = models.IntegerField()  # TODO
+    jenis_temuan = models.IntegerField(choices=[(1, "Observasi / Minor"), {2, "KTS / Mayor"}])
     akar_masalah = models.TextField()
     rekomendasi = models.TextField()
     peningkatan = models.TextField(blank=True)
+    lampiran = models.FileField(upload_to="upload/")
 
 
-class RencanaTindakLanjut(BaseEntryModel):
-    temuan = models.TextField()  # TODO tabel temuan
+class RencanaTindakLanjut(BaseModel):
+    temuan = models.ForeignKey(to=Temuan, on_delete=models.CASCADE)
     rencana_aksi = models.TextField(blank=True)
     penanggung_jawab = models.TextField(blank=True)
     target_penyelesaian = models.TextField(blank=True)
     status = models.IntegerField(choices=[(1, "Belum"), (2, "Sudah")])
     lampiran = models.FileField(upload_to='upload/')
+
+
+class Visitasi(BaseModel):
+    sub_standar = models.ForeignKey(to=SubStandar, on_delete=models.CASCADE)
+    indikator = models.ForeignKey(to=Indikator, on_delete=models.CASCADE)
+
+
+class EvaluasiDiri(BaseModel):
+    sub_standar = models.ForeignKey(to=SubStandar, on_delete=models.CASCADE)
+    indikator = models.ForeignKey(to=Indikator, on_delete=models.CASCADE)
+    dokuments = models.ManyToManyField(to=Dokumen)
