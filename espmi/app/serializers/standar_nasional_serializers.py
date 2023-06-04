@@ -1,8 +1,8 @@
 from espmi.app.models import StandarNasional
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class StandarNasionalSerializer(BaseModelSerializer):
+class StandarNasionalSerializer(serializers.ModelSerializer):
     class Meta:
         model = StandarNasional
         fields = "__all__"

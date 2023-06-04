@@ -1,8 +1,8 @@
 from espmi.app.models import Indikator
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class IndikatorSerializer(BaseModelSerializer):
+class IndikatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Indikator
         fields = "__all__"

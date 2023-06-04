@@ -70,6 +70,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    def save_oauth_id(self, oauth_id):
+        self.oauth_id = oauth_id
+        self.save()
+
+    def update_last_login(self):
+        self.last_login_at = timezone.now()
+        self.save()
+
     def __str__(self):
         return self.email
 
@@ -92,6 +100,12 @@ class BaseModel(BaseEntryModel):
 
 class UserBackOffice(User):
     full_name = models.CharField(max_length=200)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            # Jika objek baru, panggil set_password() untuk meng-hash password
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
 
 
 class UserPortal(User):
@@ -162,14 +176,15 @@ class SubMenu(BaseEntryModel):
 
 
 class Auditor(BaseEntryModel):
-    nik = models.CharField(max_length=50)
-    gelar_depan = models.CharField(max_length=5)
+    nik = models.CharField(max_length=50, unique=True)
+    gelar_depan = models.CharField(max_length=5, blank=True)
     nama_lengkap = models.CharField(max_length=100)
-    gelar_belakang = models.CharField(max_length=30)
-    jenis_kelamin = models.IntegerField(choices=[(1, "Laki-Laki"), (2, "Perempuan")])
+    lembaga_akreditasi_id = models.ForeignKey(to="LembagaAkreditasi", null=True, on_delete=models.CASCADE)
+    gelar_belakang = models.CharField(max_length=30, blank=True)
+    gender = models.IntegerField(choices=[(1, "Laki-Laki"), (2, "Perempuan")])
     instansi = models.CharField(max_length=100)
     jabatan = models.CharField(max_length=100)
-    program_studi = models.ForeignKey(to="ProgramStudi", on_delete=models.CASCADE)
+    units_id = models.ManyToManyField(to="Unit")
 
 
 class DocumentCategory(BaseEntryModel):

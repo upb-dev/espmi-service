@@ -11,16 +11,23 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+env = environ.Env(
+    DEBUG=(bool, True)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-uo93*@57t2gp*2%4xh#q77ij5t7fwbr7o0dgd5+!rdghu30%o7'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -131,9 +138,9 @@ AUTH_USER_MODEL = 'app.User'
 
 REST_FRAMEWORK = {
     # Default Authentication Class
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'c1_customer.app.permission.CustomAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'espmi.app.permission.CustomAuthentication',
+    ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'espmi.app.config.pagination.CustomPageNumberPagination',
     'PAGE_SIZE': 10,
@@ -146,3 +153,9 @@ REST_FRAMEWORK = {
     # Add cutom exception handler
     'EXCEPTION_HANDLER': 'espmi.app.config.exception_handler.custom_exception_handler',
 }
+
+# OAUTH2 SETTING
+OAUTH2_BASE_URL = env('OAUTH2_URL')
+OAUTH2_TOKEN = env('OAUTH2_TOKEN')
+OAUTH2_USERNAME = env('OAUTH2_USERNAME')
+OAUTH2_PASSWORD = env('OAUTH2_PASSWORD')

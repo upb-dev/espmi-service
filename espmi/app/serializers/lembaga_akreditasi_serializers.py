@@ -1,8 +1,8 @@
 from espmi.app.models import LembagaAkreditasi
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class LembagaAkreditasiSerializer(BaseModelSerializer):
+class LembagaAkreditasiSerializer(serializers.ModelSerializer):
     class Meta:
         model = LembagaAkreditasi
-        fields = "__all__"
+        fields = ["name", "desc"]

@@ -1,8 +1,8 @@
 from espmi.app.models import ProgramStudi
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class ProgramStudiSerializer(BaseModelSerializer):
+class ProgramStudiSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProgramStudi
         fields = "__all__"

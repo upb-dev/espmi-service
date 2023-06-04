@@ -1,8 +1,8 @@
 from espmi.app.models import Fakultas
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class FakultasSerializer(BaseModelSerializer):
+class FakultasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fakultas
         fields = "__all__"

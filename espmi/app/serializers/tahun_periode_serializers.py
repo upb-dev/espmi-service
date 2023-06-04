@@ -1,8 +1,8 @@
 from espmi.app.models import TahunPeriode
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class TahunPeriodeSerializer(BaseModelSerializer):
+class TahunPeriodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TahunPeriode
         fields = "__all__"

@@ -1,8 +1,8 @@
 from espmi.app.models import TargetNilaiMutu
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class TargetNilaiMutuSerializer(BaseModelSerializer):
+class TargetNilaiMutuSerializer(serializers.ModelSerializer):
     class Meta:
         model = TargetNilaiMutu
         fields = "__all__"

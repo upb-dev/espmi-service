@@ -1,8 +1,8 @@
 from espmi.app.models import DocumentType
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class DokumenTypeSerializer(BaseModelSerializer):
+class DokumenTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = DocumentType
         fields = "__all__"

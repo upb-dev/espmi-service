@@ -49,7 +49,7 @@ def custom_exception_handler(exc, context):
                     error_code = error_codes[0]
                 else:
                     error_code = "01"
-                errors = get_response_errors(response.data)
+                # errors = get_response_errors(response.data)
                 response.data = {'success': False, 'error_code': error_code,
                                  'message': 'Validation Error', 'data': None, 'errors': response.data}
             else:

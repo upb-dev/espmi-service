@@ -1,8 +1,8 @@
 from espmi.app.models import Menu
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class MenuSerializer(BaseModelSerializer):
+class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = "__all__"

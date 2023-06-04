@@ -1,8 +1,8 @@
 from espmi.app.models import SpmiGroup
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class SpmiGroupSerializer(BaseModelSerializer):
+class SpmiGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpmiGroup
         fields = "__all__"

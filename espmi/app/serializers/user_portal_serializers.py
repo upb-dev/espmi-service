@@ -1,8 +1,8 @@
 from espmi.app.models import UserPortal
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class UserPortalSerializer(BaseModelSerializer):
+class UserPortalSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPortal
         fields = "__all__"

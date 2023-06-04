@@ -1,8 +1,8 @@
 from espmi.app.models import DocumentCategory
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class DokumenCategorySerializer(BaseModelSerializer):
+class DokumenCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = DocumentCategory
         fields = "__all__"

@@ -1,8 +1,8 @@
 from espmi.app.models import Periode
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class PeriodeSerializer(BaseModelSerializer):
+class PeriodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Periode
         fields = "__all__"
