@@ -133,11 +133,11 @@ class SpmiGroup(Group):
 
 class Menu(BaseEntryModel):
     name = models.CharField(max_length=255)
-    UNIT_TYPE = [
+    UNIT_CHOICE = [
         (1, 'PUSAT'),
         (2, 'PORTAL'),
     ]
-    unit = models.IntegerField(choices=UNIT_TYPE)
+    unit_type = models.IntegerField(choices=UNIT_CHOICE)
 
     # Tambahkan field lain yang diperlukan
 
@@ -197,15 +197,14 @@ def __str__(self):
 
 class DocumentType(BaseEntryModel):
     name = models.CharField(max_length=255)
-    categoty = models.ForeignKey(to=DocumentCategory, on_delete=models.CASCADE)
+    category_id = models.ForeignKey(to=DocumentCategory, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
 class Dokumen(BaseModel):
-    category = models.ForeignKey(to=DocumentCategory, on_delete=models.CASCADE)
-    type = models.ForeignKey(to=DocumentType, on_delete=models.CASCADE)
+    type_id = models.ForeignKey(to=DocumentType, on_delete=models.CASCADE)
     # pogram_studi = models.ForeignKey(to="ProgramStudi", on_delete=models.CASCADE, null=True)  # TODO delete relasi
     name = models.CharField(max_length=255)
     tahun = models.IntegerField()
@@ -254,7 +253,7 @@ class ProgramStudi(Unit):
     ]
     code = models.CharField(max_length=10)
     fakultas_rel = models.ForeignKey(to=Fakultas, on_delete=models.CASCADE, related_name='program_studi_set')
-    akreditas = models.IntegerField(choices=AKREDITAS_TYPE)
+    akreditasi_type = models.IntegerField(choices=AKREDITAS_TYPE)
     no_sk = models.CharField(max_length=255)
     start_akreditasi = models.DateField()
     end_akreditasi = models.DateField()
@@ -284,9 +283,9 @@ class TahunPeriode(BaseEntryModel):
 
 
 class Periode(BaseEntryModel):
-    tahun = models.ForeignKey(to=TahunPeriode, on_delete=models.CASCADE)
-    lembaga_akreditasi = models.ForeignKey(to=LembagaAkreditasi, on_delete=models.CASCADE)
-    standar_nasional = models.ManyToManyField(StandarNasional, through=StandarNasionalPeriodeRelation)
+    tahun_id = models.ForeignKey(to=TahunPeriode, on_delete=models.CASCADE)
+    lembaga_akreditasi_id = models.ForeignKey(to=LembagaAkreditasi, on_delete=models.CASCADE)
+    standar_nasional_id = models.ManyToManyField(StandarNasional, through=StandarNasionalPeriodeRelation)
     start_evaluasi_diri = models.DateField()
     end_evaluasi_diri = models.DateField()
     start_desk_evaluation = models.DateField()

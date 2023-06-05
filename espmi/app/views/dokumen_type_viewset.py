@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class DokumentTypeViewSet(BaseModelViewSet):
-    queryset = DocumentType.objects.all()
+    queryset = DocumentType.objects.all().order_by('created_at')
     serializer_class = DokumenTypeSerializer

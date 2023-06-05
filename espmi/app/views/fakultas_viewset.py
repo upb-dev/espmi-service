@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class FakultasViewSet(BaseModelViewSet):
-    queryset = Fakultas.objects.all()
+    queryset = Fakultas.objects.all().order_by("created_at")
     serializer_class = FakultasSerializer

@@ -1,8 +1,8 @@
 from espmi.app.models import UserBackOffice
-from espmi.app.serializers.base_model_serializers import BaseModelSerializer
+from rest_framework import serializers
 
 
-class UserBackOfficeSerializer(BaseModelSerializer):
+class UserBackOfficeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserBackOffice
         fields = "__all__"

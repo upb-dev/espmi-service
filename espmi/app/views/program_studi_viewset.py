@@ -6,6 +6,6 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class ProgramStudiViewSet(BaseModelViewSet):
-    queryset = ProgramStudi.objects.all()
+    queryset = ProgramStudi.objects.all().order_by('name')
     serializer_class = ProgramStudiSerializer
     filterset_class = ProgramStudiFilter

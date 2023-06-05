@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class MenuViewSet(BaseModelViewSet):
-    queryset = Menu.objects.all()
+    queryset = Menu.objects.all().order_by('created_at')
     serializer_class = MenuSerializer

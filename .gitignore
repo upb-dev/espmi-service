@@ -172,3 +172,6 @@ static/
 sedayu_talk/app/configs/service-account.json
 error.txt
 .vscode/settings.json
+
+dokumen/
+upload/*

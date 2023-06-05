@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class DirektoratViewSet(BaseModelViewSet):
-    queryset = Direktorat.objects.all()
+    queryset = Direktorat.objects.all().order_by('created_at')
     serializer_class = DirektoratSerializer

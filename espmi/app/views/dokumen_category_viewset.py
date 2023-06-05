@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class DokumenCategoryViewSet(BaseModelViewSet):
-    queryset = DocumentCategory.objects.all()
+    queryset = DocumentCategory.objects.all().order_by('created_at')
     serializer_class = DokumenCategorySerializer

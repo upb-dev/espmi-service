@@ -5,4 +5,4 @@ from rest_framework import serializers
 class LembagaAkreditasiSerializer(serializers.ModelSerializer):
     class Meta:
         model = LembagaAkreditasi
-        fields = ["name", "desc"]
+        fields = ["id", "name", "desc"]

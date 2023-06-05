@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class KelompokSatuanMutuViewSet(BaseModelViewSet):
-    queryset = KelompokSatuanMutu.objects.all()
+    queryset = KelompokSatuanMutu.objects.all().order_by('created_at')
     serializer_class = KelompokSatuanMutuSerializer

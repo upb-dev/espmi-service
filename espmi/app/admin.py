@@ -36,6 +36,16 @@ class CustomGroupAdmin(admin.ModelAdmin):
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
+class AuditorUnitInline(admin.StackedInline):
+    model = Unit
+
+
+class CustomAuditorAdmin(admin.ModelAdmin):
+    list_display = ['nik', 'nama_lengkap', 'instansi', 'jabatan']
+    filter_horizontal = ['units_id']
+    # inlines =
+
+
 class CustomMenuMenuAdmin(admin.ModelAdmin):
     inlines = [GroupSubMenuInline]
 
@@ -48,8 +58,22 @@ class SubMenuAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+class DokumenTypeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category_id']
+
+
+class DokumenCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
 admin.site.unregister(Group)
 admin.site.register(ContentType)
+
+admin.site.register(Auditor, CustomAuditorAdmin)
+admin.site.register(Direktorat)
+admin.site.register(DocumentCategory, DokumenCategoryAdmin)
+admin.site.register(DocumentType, DokumenTypeAdmin)
+admin.site.register(Dokumen)
 
 admin.site.register(SpmiGroup, CustomGroupAdmin)
 admin.site.register(Menu, MenuAdmin)
@@ -59,7 +83,6 @@ admin.site.register(GroupSubMenuRelation)
 admin.site.register(ProgramStudi)
 admin.site.register(Fakultas)
 admin.site.register(UnitPenunjang)
-admin.site.register(Auditor)
 admin.site.register(UserBackOffice)
 admin.site.register(UserPortal)
 admin.site.register(SubStandar)
@@ -77,10 +100,6 @@ admin.site.register(TargetNilaiMutu)
 admin.site.register(Periode)
 admin.site.register(LembagaAkreditasi)
 admin.site.register(Rektorat)
-admin.site.register(Direktorat)
 admin.site.register(Unit)
 admin.site.register(StandarNasional)
-admin.site.register(Dokumen)
-admin.site.register(DocumentType)
-admin.site.register(DocumentCategory)
 admin.site.register(TahunPeriode)

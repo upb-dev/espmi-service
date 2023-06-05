@@ -5,6 +5,6 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class DokumenViewSet(BaseModelViewSet):
-    queryset = Dokumen.objects.all()
+    queryset = Dokumen.objects.all().order_by('created_at')
     serializer_class = DokumenSerializer
     filterset_class = DokumenFilter

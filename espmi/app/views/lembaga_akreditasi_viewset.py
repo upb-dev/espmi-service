@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class LembagaAkreditasiViewSet(BaseModelViewSet):
-    queryset = LembagaAkreditasi.objects.all()
+    queryset = LembagaAkreditasi.objects.all().order_by('created_at')
     serializer_class = LembagaAkreditasiSerializer

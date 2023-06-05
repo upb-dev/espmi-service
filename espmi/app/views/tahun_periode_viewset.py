@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class TahunPeriodeViewSet(BaseModelViewSet):
-    queryset = TahunPeriode.objects.all()
+    queryset = TahunPeriode.objects.all().order_by('-tahun')
     serializer_class = TahunPeriodeSerializer
