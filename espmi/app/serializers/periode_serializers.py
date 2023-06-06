@@ -7,12 +7,12 @@ from espmi.app.serializers.tahun_periode_serializers import TahunPeriodeSerializ
 
 
 class PeriodeSerializer(serializers.ModelSerializer):
-    tahun_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=TahunPeriode.objects.all())
-    lembaga_akreditasi_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=LembagaAkreditasi.objects.all())
-    standar_nasional_id = serializers.PrimaryKeyRelatedField(write_only=True, many=True, queryset=StandarNasional.objects.all())
-    tahun = TahunPeriodeSerializer(read_only=True, source='tahun_id')
-    lembaga_akreditasi = LembagaAkreditasiSerializer(read_only=True, source='lembaga_akreditasi_id')
-    standar_nasional = StandarNasionalSerializer(read_only=True, many=True, source='standar_nasional_id')
+    tahun = serializers.PrimaryKeyRelatedField(write_only=True, queryset=TahunPeriode.objects.all())
+    lembaga_akreditasi = serializers.PrimaryKeyRelatedField(write_only=True, queryset=LembagaAkreditasi.objects.all())
+    standar_nasional = serializers.PrimaryKeyRelatedField(write_only=True, many=True, queryset=StandarNasional.objects.all())
+    tahun_data = TahunPeriodeSerializer(read_only=True, source='tahun')
+    lembaga_akreditasi_data = LembagaAkreditasiSerializer(read_only=True, source='lembaga_akreditasi')
+    standar_nasional_data = StandarNasionalSerializer(read_only=True, many=True, source='standar_nasional')
 
     class Meta:
         model = Periode

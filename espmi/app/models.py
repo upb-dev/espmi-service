@@ -1,13 +1,13 @@
 import uuid
 
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        Group, Permission, PermissionsMixin)
-from django.db import models
-from django.utils import timezone
+                                        Group, PermissionsMixin)
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from django.contrib.auth.hashers import make_password
+from django.db import models
+from django.utils import timezone
 
 
 # Create your models here.
@@ -122,6 +122,7 @@ class SpmiGroup(Group):
     description = models.CharField(max_length=255, null=True)
     unit = models.IntegerField(choices=UNIT_TYPE)
     menus = models.ManyToManyField("Menu", through="GroupMenuRelation")
+    permissions = None
 
     class Meta:
 
@@ -197,14 +198,14 @@ def __str__(self):
 
 class DocumentType(BaseEntryModel):
     name = models.CharField(max_length=255)
-    category_id = models.ForeignKey(to=DocumentCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(to=DocumentCategory, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
 class Dokumen(BaseModel):
-    type_id = models.ForeignKey(to=DocumentType, on_delete=models.CASCADE)
+    type = models.ForeignKey(to=DocumentType, on_delete=models.CASCADE)
     # pogram_studi = models.ForeignKey(to="ProgramStudi", on_delete=models.CASCADE, null=True)  # TODO delete relasi
     name = models.CharField(max_length=255)
     tahun = models.IntegerField()
@@ -283,9 +284,9 @@ class TahunPeriode(BaseEntryModel):
 
 
 class Periode(BaseEntryModel):
-    tahun_id = models.ForeignKey(to=TahunPeriode, on_delete=models.CASCADE)
-    lembaga_akreditasi_id = models.ForeignKey(to=LembagaAkreditasi, on_delete=models.CASCADE)
-    standar_nasional_id = models.ManyToManyField(StandarNasional, through=StandarNasionalPeriodeRelation)
+    tahun = models.ForeignKey(to=TahunPeriode, on_delete=models.CASCADE)
+    lembaga_akreditasi = models.ForeignKey(to=LembagaAkreditasi, on_delete=models.CASCADE)
+    standar_nasional = models.ManyToManyField(StandarNasional, through=StandarNasionalPeriodeRelation)
     start_evaluasi_diri = models.DateField()
     end_evaluasi_diri = models.DateField()
     start_desk_evaluation = models.DateField()
@@ -385,4 +386,6 @@ class Visitasi(BaseModel):
 class EvaluasiDiri(BaseModel):
     sub_standar = models.ForeignKey(to=SubStandar, on_delete=models.CASCADE)
     indikator = models.ForeignKey(to=Indikator, on_delete=models.CASCADE)
-    dokuments = models.ManyToManyField(to=Dokumen)
+    dokumen = models.ManyToManyField(to=Dokumen)
+
+# TODO history evaluasi diri

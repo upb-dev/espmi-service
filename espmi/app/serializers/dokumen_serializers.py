@@ -5,8 +5,8 @@ from rest_framework import serializers
 
 
 class DokumenSerializer(BaseModelSerializer):
-    type_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=DocumentType.objects.all())
-    type = dokumen_type_serializers.DokumenTypeSerializer(read_only=True, source="type_id")
+    type = serializers.PrimaryKeyRelatedField(write_only=True, queryset=DocumentType.objects.all())
+    type_data = dokumen_type_serializers.DokumenTypeSerializer(read_only=True, source="type")
 
     class Meta:
         model = Dokumen

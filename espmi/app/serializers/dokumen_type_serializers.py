@@ -5,8 +5,8 @@ from espmi.app.serializers.dokumen_category_serializers import DokumenCategorySe
 
 
 class DokumenTypeSerializer(serializers.ModelSerializer):
-    category = DokumenCategorySerializer(read_only=True, source="category_id")
-    category_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=DocumentCategory.objects.all())
+    category = serializers.PrimaryKeyRelatedField(write_only=True, queryset=DocumentCategory.objects.all())
+    category_data = DokumenCategorySerializer(read_only=True, source="category")
 
     class Meta:
         model = DocumentType
