@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class StandarNasionalViewSet(BaseModelViewSet):
-    queryset = StandarNasional.objects.all()
+    queryset = StandarNasional.objects.all().order_by("created_at")
     serializer_class = StandarNasionalSerializer

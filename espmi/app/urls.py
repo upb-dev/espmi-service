@@ -1,6 +1,7 @@
 from rest_framework import routers
 from django.urls import include, path
 from espmi.app.views import menu_viewset, program_studi_viewset, satuan_mutu_viewset, unit_penujang_viewset, user_protal_viewset
+from espmi.app.views.content_type_view import ContentTypeWiewSet
 from espmi.app.views.dokumen_type_viewset import DokumentTypeViewSet
 from espmi.app.views.auditor_viewset import AuditorViewSet
 from espmi.app.views.direktorat_viewset import DirektoratViewSet
@@ -27,6 +28,7 @@ from espmi.app.views.user_backoffice_viewset import UserBackOfficeViewSet
 from espmi.app.views.visitasi_viewset import VisitasiViewSet
 router = routers.DefaultRouter()
 router.register(r'auditor', AuditorViewSet)
+router.register(r'content-type', ContentTypeWiewSet)
 router.register(r'direktorat', DirektoratViewSet)
 router.register(r'dokumen-category', DokumenCategoryViewSet)
 router.register(r'dokumen-type', DokumentTypeViewSet)

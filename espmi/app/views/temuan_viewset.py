@@ -6,6 +6,6 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class TemuanViewSet(BaseModelViewSet):
-    queryset = Temuan.objects.all()
+    queryset = Temuan.objects.all().order_by("created_at")
     serializer_class = TemuanSerializer
     filterset_class = TemuanFilter

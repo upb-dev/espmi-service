@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class TargetNilaiMutuViewSet(BaseModelViewSet):
-    queryset = TargetNilaiMutu.objects.all()
+    queryset = TargetNilaiMutu.objects.all().order_by("created_at")
     serializer_class = TargetNilaiMutuSerializer

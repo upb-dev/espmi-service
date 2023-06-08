@@ -113,6 +113,12 @@ class UserPortal(User):
     role_id = models.UUIDField()
     role = GenericForeignKey('content_type', 'role_id')
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            # Jika objek baru, panggil set_password() untuk meng-hash password
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
+
 
 class SpmiGroup(Group):
     UNIT_TYPE = [

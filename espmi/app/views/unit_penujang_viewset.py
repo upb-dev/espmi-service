@@ -5,5 +5,5 @@ from espmi.app.views.base_model_viewset import BaseModelViewSet
 
 
 class UnitPenunjangViewSet(BaseModelViewSet):
-    queryset = UnitPenunjang.objects.all()
+    queryset = UnitPenunjang.objects.all().order_by("created_at")
     serializer_class = UnitPenunjangSerializer
