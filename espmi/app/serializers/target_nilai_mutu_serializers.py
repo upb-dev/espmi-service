@@ -8,8 +8,8 @@ from espmi.app.serializers.tahun_periode_serializers import TahunPeriodeSerializ
 
 class TargetNilaiMutuSerializer(serializers.ModelSerializer):
     program_studi = serializers.PrimaryKeyRelatedField(write_only=True, queryset=ProgramStudi.objects.all())
-    tahun = serializers.PrimaryKeyRelatedField(write_only=True, queryset=TahunPeriode.objects.all())
-    lembaga_akreditasi = serializers.PrimaryKeyRelatedField(write_only=True, queryset=LembagaAkreditasi.objects.all())
+    tahun = serializers.PrimaryKeyRelatedField(queryset=TahunPeriode.objects.all())
+    lembaga_akreditasi = serializers.PrimaryKeyRelatedField(queryset=LembagaAkreditasi.objects.all())
     program_studi_data = ProgramStudiSerializer(read_only=True, source='program_studi')
 
     class Meta:
