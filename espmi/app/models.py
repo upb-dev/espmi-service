@@ -186,7 +186,7 @@ class Auditor(BaseEntryModel):
     nik = models.CharField(max_length=50, unique=True)
     gelar_depan = models.CharField(max_length=5, blank=True)
     nama_lengkap = models.CharField(max_length=100)
-    lembaga_akreditasi_id = models.ForeignKey(to="LembagaAkreditasi", null=True, on_delete=models.CASCADE)
+    lembaga_akreditasi_id = models.ManyToManyField(to="LembagaAkreditasi")
     gelar_belakang = models.CharField(max_length=30, blank=True)
     gender = models.IntegerField(choices=[(1, "Laki-Laki"), (2, "Perempuan")])
     instansi = models.CharField(max_length=100)

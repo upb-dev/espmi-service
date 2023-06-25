@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.urls import include, path
-from espmi.app.views import menu_viewset, program_studi_viewset, satuan_mutu_viewset, unit_penujang_viewset, user_protal_viewset
+from espmi.app.views import menu_viewset, program_studi_viewset, satuan_mutu_viewset, unit_penunjang_viewset, user_protal_viewset
 from espmi.app.views.content_type_view import ContentTypeWiewSet
 from espmi.app.views.dokumen_type_viewset import DokumentTypeViewSet
 from espmi.app.views.auditor_viewset import AuditorViewSet
@@ -24,6 +24,7 @@ from espmi.app.views.sub_standar_viewset import SubStandarViewSet
 from espmi.app.views.tahun_periode_viewset import TahunPeriodeViewSet
 from espmi.app.views.target_nilai_mutu_viewset import TargetNilaiMutuViewSet
 from espmi.app.views.temuan_viewset import TemuanViewSet
+from espmi.app.views.unit_viewset import UnitViewSet
 from espmi.app.views.user_backoffice_viewset import UserBackOfficeViewSet
 from espmi.app.views.visitasi_viewset import VisitasiViewSet
 router = routers.DefaultRouter()
@@ -53,7 +54,8 @@ router.register(r'sub-standar', SubStandarViewSet)
 router.register(r'tahun-periode', TahunPeriodeViewSet)
 router.register(r'target-nilai-mutu', TargetNilaiMutuViewSet)
 router.register(r'temuan', TemuanViewSet)
-router.register(r'unit-penunjang', unit_penujang_viewset.UnitPenunjangViewSet)
+router.register(r'unit', UnitViewSet)
+router.register(r'unit-penunjang', unit_penunjang_viewset.UnitPenunjangViewSet)
 router.register(r'user-backoffice', UserBackOfficeViewSet)
 router.register(r'user-portal', user_protal_viewset.UserPortalViewSet)
 router.register(r'visitasi', VisitasiViewSet)
